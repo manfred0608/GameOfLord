@@ -13,6 +13,8 @@
 		632D2A7A1AA2EAE5001BBBD9 /* UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 632D2A791AA2EAE5001BBBD9 /* UI.m */; };
 		632D2A841AA2F136001BBBD9 /* GamePlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 632D2A831AA2F136001BBBD9 /* GamePlay.m */; };
 		6381B0F41AA322CB0065D8D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B0F31AA322CB0065D8D5 /* Constants.m */; };
+		6381B1091AA487B30065D8D5 /* Level.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B1081AA487B30065D8D5 /* Level.m */; };
+		6381B11E1AA57F090065D8D5 /* Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B11D1AA57F090065D8D5 /* Animation.m */; };
 		7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
 		7A40360419DDEE84007B6E8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A40360319DDEE84007B6E8F /* main.m */; };
 		7A4036E819DE3F33007B6E8F /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
@@ -164,6 +166,10 @@
 		632D2A831AA2F136001BBBD9 /* GamePlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlay.m; path = Source/GamePlay.m; sourceTree = "<group>"; };
 		6381B0F21AA322A40065D8D5 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		6381B0F31AA322CB0065D8D5 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Source/Constants.m; sourceTree = "<group>"; };
+		6381B1071AA487B30065D8D5 /* Level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Level.h; path = Source/Level.h; sourceTree = "<group>"; };
+		6381B1081AA487B30065D8D5 /* Level.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Level.m; path = Source/Level.m; sourceTree = "<group>"; };
+		6381B11C1AA57F090065D8D5 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animation.h; path = Source/Animation.h; sourceTree = "<group>"; };
+		6381B11D1AA57F090065D8D5 /* Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Animation.m; path = Source/Animation.m; sourceTree = "<group>"; };
 		7A4035FF19DDEE84007B6E8F /* GameOfLord Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GameOfLord Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A40360219DDEE84007B6E8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/Mac/Info.plist; sourceTree = "<group>"; };
 		7A40360319DDEE84007B6E8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/Platforms/Mac/main.m; sourceTree = "<group>"; };
@@ -468,6 +474,10 @@
 				632D2A831AA2F136001BBBD9 /* GamePlay.m */,
 				6381B0F21AA322A40065D8D5 /* Constants.h */,
 				6381B0F31AA322CB0065D8D5 /* Constants.m */,
+				6381B1071AA487B30065D8D5 /* Level.h */,
+				6381B1081AA487B30065D8D5 /* Level.m */,
+				6381B11C1AA57F090065D8D5 /* Animation.h */,
+				6381B11D1AA57F090065D8D5 /* Animation.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -839,6 +849,8 @@
 			files = (
 				B73789871807631A0076A88C /* main.m in Sources */,
 				632D2A841AA2F136001BBBD9 /* GamePlay.m in Sources */,
+				6381B11E1AA57F090065D8D5 /* Animation.m in Sources */,
+				6381B1091AA487B30065D8D5 /* Level.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,
 				632D2A7A1AA2EAE5001BBBD9 /* UI.m in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,

@@ -7,7 +7,10 @@
 //
 
 #import "CCNode.h"
+#import "Level.h"
 
 @interface GamePlay : CCNode
+
+@property (nonatomic, strong) Level *levelNode;
 
 @end

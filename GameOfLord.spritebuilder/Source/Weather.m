@@ -14,8 +14,8 @@ static const int gap = 6;
 @implementation Weather
 
 - (void) loadWeather:(NSString*) name{
-    self.timer = 0;
-    self._frameArray = [NSArray array];
+    _timer = 0;
+    _frameArray = [NSArray array];
     
     CCSpriteFrame *frame = nil;
     for (int i = 0; i < numOfFrams; i++) {
@@ -28,7 +28,7 @@ static const int gap = 6;
                               dir, name, slash, num, fileType];
         
         frame = [CCSpriteFrame frameWithImageNamed:fileName];
-        self._frameArray = [self._frameArray arrayByAddingObject:frame];
+        _frameArray = [_frameArray arrayByAddingObject:frame];
     }
 
     self.frameSize = frame.originalSize;
@@ -39,7 +39,7 @@ static const int gap = 6;
     if(self.timer == (numOfFrams * gap))
         self.timer = 0;
     
-    CCSpriteFrame *curFrame = [self._frameArray objectAtIndex:(self.timer / gap)];
+    CCSpriteFrame *curFrame = [_frameArray objectAtIndex:(self.timer / gap)];
     [self setSpriteFrame:curFrame];
     return;
 }

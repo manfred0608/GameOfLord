@@ -7,10 +7,12 @@
 //
 
 #import "CCSprite.h"
+#import "Animation.h"
 
-@interface Weather : CCSprite
+@interface Weather : Animation
+
 @property (nonatomic, assign) int timer;
-@property (nonatomic, copy) NSArray *_frameArray;
+@property (nonatomic, copy) NSArray *frameArray;
 @property (nonatomic, assign) CGSize frameSize;
 
 -(void) loadWeather:(NSString*) name;

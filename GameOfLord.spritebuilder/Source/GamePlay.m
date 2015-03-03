@@ -9,13 +9,10 @@
 #import "GamePlay.h"
 #import "UI.h"
 
-
 @implementation GamePlay{
     CCAction *_fingerMove;
     
-    CCNode *_contentNode;
-    CCNode *_levelNode;
-    
+    CCNode *_contentNode;    
     UI *_uiNode;
     
     CGPoint touchStartPos;
@@ -25,30 +22,52 @@
 - (void)didLoadFromCCB {
     // tell this scene to accept touches
     self.userInteractionEnabled = TRUE;
-    _levelNode = [CCBReader load:@"Levels/Level1-1"];
+    
+    _levelNode = [[Level alloc] initLevel];
     [_contentNode addChild:_levelNode];
     
     [self initWeather];
-    [self initLevelNode];
+    [self centerLevelNode];
     [self resetTouchStartPos];
 }
 
-- (void)initLevelNode{
-    _levelNode.position = ccp(_contentNode.contentSizeInPoints.width / 2,
-                              _contentNode.contentSizeInPoints.height / 2);
+- (void)centerLevelNode{
+    float centerX = CGRectGetMidX(_contentNode.boundingBox);
+    float centerY = CGRectGetMidY(_contentNode.boundingBox);
+    _levelNode.position = ccp(centerX ,
+                              centerY) ;
 }
 
 - (void)initWeather{
-    Weather *_weatherNode = _uiNode._weatherNode;
-    [_weatherNode loadWeather:@"sunny"];
-    CGFloat scale = _uiNode.contentSize.height / _weatherNode.frameSize.height;
-    _weatherNode.scaleX = scale;
-    _weatherNode.scaleY = scale;
+    Weather *weatherNode = _uiNode.weatherNode;
+    [weatherNode loadWeather:@"Sunny"];
+    CGFloat scale = _uiNode.contentSize.height / weatherNode.frameSize.height;
+    weatherNode.scaleX = scale;
+    weatherNode.scaleY = scale;
 }
 
 -(void) touchBegan:(CCTouch *)touch withEvent:(UIEvent *)event{
+    [self setDragStartPos: [touch locationInNode:_contentNode]];
+    [_levelNode placeSelector: [touch locationInNode:_levelNode]];
+}
+
+- (void)touchMoved:(CCTouch *)touch withEvent:(UIEvent *)event{
     CGPoint touchLocation = [touch locationInNode:_contentNode];
-    [self setDragStartPos:touchLocation];
+    [self dragScreen:touchLocation];
+}
+
+-(void) touchEnded:(CCTouch *)touch withEvent:(UIEvent *)event{
+    // when touches end
+    [self resetTouchStartPos];
+}
+
+-(void) touchCancelled:(CCTouch *)touch withEvent:(UIEvent *)event{
+    // when touches are cancelled
+    [self resetTouchStartPos];
+}
+
+-(void) update:(CCTime)delta{
+    _levelNode.position = [self posInBound:[_levelNode position]];
 }
 
 -(void) setDragStartPos:(CGPoint)touchLocation{
@@ -65,31 +84,12 @@
             touchStartPos = touchLocation;
             
             CGPoint newPos = ccpAdd(moveTo, _levelNode.position);
-            [_levelNode setPosition:newPos];
+            [_levelNode setPosition: newPos];
         }else
             touchStartPos = touchLocation;
     }else
         [self resetTouchStartPos];
 }
-
-- (void)touchMoved:(CCTouch *)touch withEvent:(UIEvent *)event{
-    CGPoint touchLocation = [touch locationInNode:_contentNode];
-    
-    CGRect box = _levelNode.boundingBox;
-    CCLOG(@"posX: %f; posY: %f; width: %f; height: %f", box.origin.x, box.origin.y, box.size.width, box.size.height);
-    [self dragScreen:touchLocation];
-}
-
--(void) touchEnded:(CCTouch *)touch withEvent:(UIEvent *)event{
-    // when touches end
-    [self resetTouchStartPos];
-}
-
--(void) touchCancelled:(CCTouch *)touch withEvent:(UIEvent *)event{
-    // when touches are cancelled, meaning the user drags their finger off the screen or onto something else, release the catapult
-    [self resetTouchStartPos];
-}
-
 
 - (void)resetTouchStartPos{
     touchStartPos = ccp(NAN, NAN);
@@ -99,12 +99,31 @@
     return !isnan(touchStartPos.x) && !isnan(touchStartPos.y);
 }
 
-- (BOOL)levelInBound{
-    if(_levelNode.position.x > 0)
-        return false;
-    if(_levelNode.position.y > 0)
-        return false;
-    //if(level.position.x + level.contentSize.)
-    return true;
+- (CGPoint)posInBound:(CGPoint) pos{
+    if(CGRectContainsRect(_levelNode.boundingBox, _contentNode.boundingBox))
+        return pos;
+    
+    float xMin = _contentNode.boundingBox.origin.x;
+    float xMax = xMin + _contentNode.boundingBox.size.width;
+    
+    float yMin = _contentNode.boundingBox.origin.y;
+    float yMax = yMin + _contentNode.boundingBox.size.height;
+    
+    float x = pos.x;
+    float y = pos.y;
+    
+    if(_levelNode.boundingBox.origin.x > xMin)
+        x = xMin;
+    
+    if((_levelNode.boundingBox.origin.x + _levelNode.boundingBox.size.width) < xMax)
+        x = xMax - _levelNode.boundingBox.size.width;
+    
+    if(_levelNode.boundingBox.origin.y + _levelNode.boundingBox.size.height < yMax)
+        y = yMax - _levelNode.boundingBox.size.height;
+    
+    if (_levelNode.boundingBox.origin.y > yMin)
+        y = yMin;
+    
+    return ccp(x, y);
 }
 @end

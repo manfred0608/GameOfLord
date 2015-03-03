@@ -11,7 +11,7 @@
 @implementation UI
 
 - (void)loadUI:(NSString *)name{
-    [self._weatherNode loadWeather:@"sunny"];
+    [_weatherNode loadWeather:@"sunny"];
 }
 
 @end

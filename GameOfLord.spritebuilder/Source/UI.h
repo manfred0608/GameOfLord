@@ -11,7 +11,7 @@
 
 @interface UI : CCNode
 
-@property (nonatomic, strong) Weather *_weatherNode;
+@property (nonatomic, strong) Weather *weatherNode;
 
 - (void)loadUI:(NSString*) name;
 @end
