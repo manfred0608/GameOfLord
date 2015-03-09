@@ -7,8 +7,6 @@
 //
 
 #import "Character.h"
-#import "Constants.h"
-#import "MapHelper.h"
 
 const NSString* baseDir = @"GameOfLordAssets/Characters/";
 static const float speed = 300.0f;
@@ -68,9 +66,12 @@ static const float speed = 300.0f;
     if(_brightnessEffect == nil)
         _brightnessEffect = [[CCEffectBrightness alloc] initWithBrightness:-0.2f];
     self.effect = _brightnessEffect;
+    
+    [NodeController process:SELECTED_DONE withNodeName:@"Level"];
 }
 
 -(void) moveLeft{
+    
     NSString *leftAction = [NSString stringWithFormat:@"%@%@_", MOVE, FACE_LEFT];
     self.flipX = NO;
     
@@ -101,7 +102,10 @@ static const float speed = 300.0f;
 }
 
 -(void) update:(CCTime)delta{
+    [NodeController process:CLOSE_USER_INTERACTION withNodeName:@"GamePlay"];
+    
     if(CGPointEqualToPoint(_indexes, _dest)){
+        [NodeController process:OPEN_USER_INTERACTION withNodeName:@"GamePlay"];
     }else if(_dest.y != _indexes.y){
         int direction = (_dest.y - _indexes.y) > 0? 1: -1;
         

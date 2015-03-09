@@ -7,12 +7,6 @@
 //
 
 #import "GamePlay.h"
-#import "UI.h"
-#import "Constants.h"
-
-#import "Weather.h"
-#import "Character.h"
-#import "MapHelper.h"
 
 @implementation GamePlay{
     CCAction *_fingerMove;
@@ -29,9 +23,14 @@
     self.userInteractionEnabled = YES;
     
     [_uiNode loadUI: CLOUDY];
-    [self loadLevel: @"1-1"];
+    [[NodeController getAllNodes] setValue:_uiNode forKey:@"UI"];
     
+    [self loadLevel: @"1-1"];
+    [[NodeController getAllNodes] setValue:_levelNode forKey:@"Level"];
+    
+    [[NodeController getAllNodes] setValue:self forKey:@"GamePlay"];
     [self resetTouchStartPos];
+    
 }
 
 - (void)loadLevel:(NSString*) name{
@@ -52,7 +51,8 @@
     [self setDragStartPos: [touch locationInNode:_contentNode]];
     
     if(!_selector){
-        _selector = [CCBReader load:@"Selectors/White"];
+        _selector = [CCBReader load:@"Selectors/Select"];
+        _selector.scale = [MapHelper cellSize] / _selector.contentSizeInPoints.width;
         [_levelNode addChild: _selector];
     }
     
@@ -60,60 +60,50 @@
 }
 
 -(void) placeSelector:(CGPoint) touchLocation{
-    int cell = [MapHelper cellSize];
-    int col = touchLocation.x / cell;
-    int row = touchLocation.y / cell;
+    int col = touchLocation.x / [MapHelper cellSize];
+    int row = touchLocation.y / [MapHelper cellSize];
     
-    _selector.position = ccp(col * cell, row * cell);
+    CGPoint newPos = ccp(col * [MapHelper cellSize], row * [MapHelper cellSize]);
     
-    NSArray *pMoves = [_levelNode moveToTiles];
-    if (_levelNode.selectedCharacter && [MapHelper containsMoves:pMoves withValue: ccp(row, col)]){
-        [_levelNode selectedMoveTo:ccp(row, col)];
-        [self cleanUpSelect];
-        return;
-    }
-    
-    for(int i = 0; i < [[_levelNode characters] count]; i++){
-        Character *cur = [[_levelNode characters] objectAtIndex:i];
-        
-        if (cur.indexes.x == row && cur.indexes.y == col) {
-            [self selectOn: cur];
+    if(CGPointEqualToPoint(_selector.position, newPos)){
+        if (_levelNode.selectedCharacter) {
+            
+        }else
             return;
-        }
     }
     
     [self cleanUpSelect];
+    _selector.position = newPos;
+    
+    if ([_levelNode showAction:ccp(row, col)]) {
+        [self placeTiles:[_levelNode moveToTiles] withName:@"moveTile"
+             withCCBName:@"Selectors/Move"];
+        [self placeTiles:[_levelNode attackTiles] withName:@"attackTile"
+             withCCBName:@"Selectors/Red"];
+    }
 }
 
 -(void) cleanUpSelect{
-    _levelNode.selectedCharacter = nil;
     NSArray *children = [_levelNode children];
     for(int i = 0; i < [children count]; i++){
         CCNode *node = (CCNode*)[children objectAtIndex:i];
-        if ([node.name hasPrefix:@"moveTile"]){
+        if ([node.name hasPrefix:@"moveTile"] || [node.name hasPrefix:@"attackTile"]){
             [node removeFromParentAndCleanup:YES];
             i--;
         }
     }
 }
 
--(void) selectOn:(Character*) cur{
-    if(_levelNode.selectedCharacter == cur)
-        return;
-    
-    [self cleanUpSelect];
-    _levelNode.selectedCharacter = cur;
-    
+-(void) placeTiles:(NSArray*)locations withName:(NSString*)name withCCBName:(NSString*)ccb{
     int count = 0;
     
-    NSArray *tiles = [_levelNode moveToTiles];
-    
-    for(int i = 0; i < [tiles count]; i++){
-        CCNode *moveTile = [CCBReader load:@"Selectors/Green"];
-        moveTile.name = [NSString stringWithFormat:@"%@%@", @"moveTile", @(i)];
-        [_levelNode addChild:moveTile];
-        CGPoint pos = [[tiles objectAtIndex:i] CGPointValue];
-        moveTile.position = [MapHelper placeAtIndexes: pos];
+    for(int i = 0; i < [locations count]; i++){
+        CCNode *tile = [CCBReader load:ccb];
+        tile.scale = [MapHelper cellSize] / tile.contentSizeInPoints.width;
+        tile.name = [NSString stringWithFormat:@"%@%@", name, @(i)];
+        [_levelNode addChild:tile];
+        CGPoint pos = [[locations objectAtIndex:i] CGPointValue];
+        tile.position = [MapHelper placeAtIndexes: pos];
         count++;
     }
 }

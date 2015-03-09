@@ -8,6 +8,9 @@
 
 #import "CCNode.h"
 #import "Character.h"
+#import "Constants.h"
+#import "MapHelper.h"
+
 @interface Level : CCNode
 
 @property (nonatomic, strong) NSString *levelNo;
@@ -22,5 +25,6 @@
 -(NSArray*) attackTiles;
 
 -(void) selectedMoveTo:(CGPoint)indexes;
+-(BOOL) showAction:(CGPoint) newTouch;
 
 @end

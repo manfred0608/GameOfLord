@@ -53,3 +53,8 @@ NSString* const FACE_UP = @"up";
 NSString* const FACE_DOWN = @"down";
 NSString* const FACE_LEFT = @"left";
 NSString* const FACE_RIGHT = @"right";
+
+int const CLOSE_USER_INTERACTION = 5;
+int const OPEN_USER_INTERACTION = 6;
+
+int const SELECTED_DONE = 7;

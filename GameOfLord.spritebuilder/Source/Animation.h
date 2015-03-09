@@ -7,6 +7,9 @@
 //
 
 #import "CCSprite.h"
+#import "MapHelper.h"
+#import "Constants.h"
+#import "NodeController.h"
 
 @interface Animation : CCSprite
 

@@ -12,6 +12,7 @@
 		632D2A711AA1654E001BBBD9 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 632D2A701AA1654E001BBBD9 /* Weather.m */; };
 		632D2A7A1AA2EAE5001BBBD9 /* UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 632D2A791AA2EAE5001BBBD9 /* UI.m */; };
 		632D2A841AA2F136001BBBD9 /* GamePlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 632D2A831AA2F136001BBBD9 /* GamePlay.m */; };
+		632DFEC11AAD6ACE003BC368 /* NodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632DFEC01AAD6ACE003BC368 /* NodeController.m */; };
 		6381B0F41AA322CB0065D8D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B0F31AA322CB0065D8D5 /* Constants.m */; };
 		6381B1091AA487B30065D8D5 /* Level.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B1081AA487B30065D8D5 /* Level.m */; };
 		6381B11E1AA57F090065D8D5 /* Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B11D1AA57F090065D8D5 /* Animation.m */; };
@@ -166,6 +167,8 @@
 		632D2A791AA2EAE5001BBBD9 /* UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UI.m; path = Source/UI.m; sourceTree = "<group>"; };
 		632D2A821AA2F136001BBBD9 /* GamePlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePlay.h; path = Source/GamePlay.h; sourceTree = "<group>"; };
 		632D2A831AA2F136001BBBD9 /* GamePlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlay.m; path = Source/GamePlay.m; sourceTree = "<group>"; };
+		632DFEBF1AAD6ACE003BC368 /* NodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeController.h; path = Source/NodeController.h; sourceTree = "<group>"; };
+		632DFEC01AAD6ACE003BC368 /* NodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NodeController.m; path = Source/NodeController.m; sourceTree = "<group>"; };
 		6381B0F21AA322A40065D8D5 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		6381B0F31AA322CB0065D8D5 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = Source/Constants.m; sourceTree = "<group>"; };
 		6381B1071AA487B30065D8D5 /* Level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Level.h; path = Source/Level.h; sourceTree = "<group>"; };
@@ -496,6 +499,8 @@
 				6381B11D1AA57F090065D8D5 /* Animation.m */,
 				6381B11F1AA5A0AE0065D8D5 /* Character.h */,
 				6381B1201AA5A0AE0065D8D5 /* Character.m */,
+				632DFEBF1AAD6ACE003BC368 /* NodeController.h */,
+				632DFEC01AAD6ACE003BC368 /* NodeController.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -866,6 +871,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B73789871807631A0076A88C /* main.m in Sources */,
+				632DFEC11AAD6ACE003BC368 /* NodeController.m in Sources */,
 				6381B1211AA5A0AE0065D8D5 /* Character.m in Sources */,
 				632D2A841AA2F136001BBBD9 /* GamePlay.m in Sources */,
 				6381B11E1AA57F090065D8D5 /* Animation.m in Sources */,

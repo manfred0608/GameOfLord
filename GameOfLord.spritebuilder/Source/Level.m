@@ -7,8 +7,6 @@
 //
 
 #import "Level.h"
-#import "Constants.h"
-#import "MapHelper.h"
 
 @implementation Level
 
@@ -36,6 +34,25 @@
     return;
 }
 
+-(BOOL) showAction:(CGPoint) newTouch{
+    NSArray *pMoves = [self moveToTiles];
+    if (_selectedCharacter && [MapHelper containsMoves:pMoves withValue:newTouch]){
+        [self selectedMoveTo:newTouch];
+        return NO;
+    }
+    
+    for(int i = 0; i < [_characters count]; i++){
+        Character *cur = [_characters objectAtIndex:i];
+
+        if (CGPointEqualToPoint(cur.indexes, newTouch)) {
+            _selectedCharacter = cur;
+            return YES;
+        }
+    }
+    _selectedCharacter = nil;
+    return NO;
+}
+
 -(void) selectedMoveTo:(CGPoint)indexes{
     if(!_selectedCharacter)
         return;
@@ -44,10 +61,6 @@
     [self updateGameBoard:indexes withValue:OCCUPIED];
     
     _selectedCharacter.dest = indexes;
-}
-
--(void) update:(CCTime)delta{
-    
 }
 
 -(void) addEnemy{
@@ -62,7 +75,15 @@
     
 }
 
--(NSMutableArray*) moveToTiles{
+-(NSArray*) moveToTiles{
+    return [self getTiles:self.selectedCharacter.moveRange];
+}
+
+-(NSArray*) attackTiles{
+    return [self getTiles:self.selectedCharacter.attackRange];
+}
+
+-(NSArray*) getTiles:(NSRange)range{
     if(_selectedCharacter == nil)
         return nil;
     
@@ -74,7 +95,7 @@
             NSMutableArray *row = (NSMutableArray*)[_gameBoard objectForKey:[NSNumber numberWithInt:i]];
             NSInteger status = [[row objectAtIndex:j] integerValue];
             
-            BOOL inrange = [MapHelper inRange:_selectedCharacter.indexes withRange: _selectedCharacter.moveRange compareWith: ccp(i, j)];
+            BOOL inrange = [MapHelper inRange:_selectedCharacter.indexes withRange: range compareWith: ccp(i, j)];
             if(status == NON_OCCUPIED && inrange){
                 [res insertObject: [NSValue valueWithCGPoint:ccp(i, j)] atIndex:count];
                 count++;
@@ -84,17 +105,10 @@
     return res;
 }
 
-/*
--(NSArray*) attackTiles{
-    if(_selectedCharacter)
-        return nil;
-}
-*/
-
 
 -(void) addNewCharacter:(NSString*) cname withFaceTo:(NSString*) faceTo atPos:(CGPoint) indexes{
     Character* person = [[Character alloc] initWithType:SELF withBlood:100 withLevel:1 withExperience:0 withAttack:25 withDef:15 withMiss:20 withName:cname withFaceTo:faceTo
-        withAttackRange:NSMakeRange(1, 0) withMoveRange:NSMakeRange(1, 10)];
+        withAttackRange:NSMakeRange(1, 0) withMoveRange:NSMakeRange(1, 4)];
     
     [person actDefault];
     [self addChild:person];

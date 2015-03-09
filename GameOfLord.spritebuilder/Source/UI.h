@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Weather.h"
+#import "Constants.h"
 
 @interface UI : CCNode
 

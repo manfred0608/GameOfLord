@@ -53,4 +53,9 @@ extern NSString* const FACE_DOWN;
 extern NSString* const FACE_LEFT;
 extern NSString* const FACE_RIGHT;
 
+extern int const CLOSE_USER_INTERACTION;
+extern int const OPEN_USER_INTERACTION;
+
+extern int const SELECTED_DONE;
+
 #endif

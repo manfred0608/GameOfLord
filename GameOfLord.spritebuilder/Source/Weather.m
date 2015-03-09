@@ -7,7 +7,6 @@
 //
 
 #import "Weather.h"
-#import "Constants.h"
 
 @implementation Weather
 
