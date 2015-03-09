@@ -12,5 +12,6 @@
 @interface GamePlay : CCNode
 
 @property (nonatomic, strong) Level *levelNode;
+@property (nonatomic, strong) CCNode *selector;
 
 @end

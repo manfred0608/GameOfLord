@@ -8,3 +8,48 @@
 
 #import <Foundation/Foundation.h>
 #import "Constants.h"
+
+NSString* const MOVE = @"/move/";
+NSString* const ATTACK = @"/attack/";
+NSString* const DEF = @"/spec/def_";
+NSString* const STAND = @"/move/stand_";
+
+int const NUM_MOVE_FRAMES = 2;
+
+int const NUM_STAND_FRAMES = 1;
+
+NSString* const DYING = @"/move/dying_";
+int const NUM_DYING_FRAMES = 2;
+
+int const NUM_ATTACK_FRAMES = 4;
+
+int const NUM_DEF_FRAMES = 1;
+
+NSString* const HIT = @"/spec/hit_";
+int const NUM_HIT_FRAMES = 1;
+
+NSString* const LEVEL_UP = @"/spec/level_up_";
+int const NUM_LEVEL_UP_FRAMES = 1;
+
+NSString* const SUNNY = @"Sunny/";
+NSString* const CLOUDY = @"Cloudy/";
+NSString* const SNOWY = @"Snowy/";
+NSString* const RAINY = @"Rainy/";
+NSString* const HEAVY_RAINY = @"Heavy_Rain/";
+
+int const NUM_WEATHER_FRAMES = 4;
+
+NSString* const SELF = @"Self";
+NSString* const ENEMY = @"Enemy";
+NSString* const NPC = @"Friend";
+
+NSInteger const OCCUPIED = 3;
+NSInteger const NON_OCCUPIED = 4;
+
+float const DYING_BLOOD_RATIO = 0.2f;
+int const SCALE = 100;
+
+NSString* const FACE_UP = @"up";
+NSString* const FACE_DOWN = @"down";
+NSString* const FACE_LEFT = @"left";
+NSString* const FACE_RIGHT = @"right";

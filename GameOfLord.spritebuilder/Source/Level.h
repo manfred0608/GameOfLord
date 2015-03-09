@@ -7,11 +7,20 @@
 //
 
 #import "CCNode.h"
-
+#import "Character.h"
 @interface Level : CCNode
 
-@property (nonatomic, strong) CCSprite *selector;
+@property (nonatomic, strong) NSString *levelNo;
+@property (nonatomic, strong) Character *selectedCharacter;
+@property (nonatomic, strong) NSMutableArray *characters;
 
--(id) initLevel;
--(void) placeSelector:(CGPoint) position;
+@property (nonatomic, assign) int rowNum;
+@property (nonatomic, assign) int colNum;
+@property (nonatomic, strong) NSMutableDictionary *gameBoard;
+
+-(NSArray*) moveToTiles;
+-(NSArray*) attackTiles;
+
+-(void) selectedMoveTo:(CGPoint)indexes;
+
 @end

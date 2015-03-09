@@ -6,14 +6,10 @@
 //  Copyright (c) 2015 Apportable. All rights reserved.
 //
 
-#import "CCSprite.h"
 #import "Animation.h"
 
 @interface Weather : Animation
 
-@property (nonatomic, assign) int timer;
-@property (nonatomic, copy) NSArray *frameArray;
-@property (nonatomic, assign) CGSize frameSize;
+-(void) loadWeatherFrame:(NSString*) name;
 
--(void) loadWeather:(NSString*) name;
 @end

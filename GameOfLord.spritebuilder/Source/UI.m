@@ -7,11 +7,17 @@
 //
 
 #import "UI.h"
+#import "Constants.h"
 
 @implementation UI
 
 - (void)loadUI:(NSString *)name{
-    [_weatherNode loadWeather:@"sunny"];
+    [_weatherNode loadWeatherFrame:name];
+    
+    CGFloat scale = _contentSize.height / _weatherNode.frameSize.height;
+    _weatherNode.scaleX = scale;
+    _weatherNode.scaleY = scale;
 }
+
 
 @end

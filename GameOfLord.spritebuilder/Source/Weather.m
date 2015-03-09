@@ -7,41 +7,26 @@
 //
 
 #import "Weather.h"
-
-static const int numOfFrams = 4;
-static const int gap = 6;
+#import "Constants.h"
 
 @implementation Weather
 
-- (void) loadWeather:(NSString*) name{
-    _timer = 0;
-    _frameArray = [NSArray array];
-    
-    CCSpriteFrame *frame = nil;
-    for (int i = 0; i < numOfFrams; i++) {
-        NSString *dir = @"GameOfLordAssets/Weathers/";
-        NSString *fileType = @".png";
-        NSString *slash = @"/";
-        NSString *num = [@(i + 1) stringValue];
-        
-        NSString *fileName = [NSString stringWithFormat:@"%@%@%@%@%@",
-                              dir, name, slash, num, fileType];
-        
-        frame = [CCSpriteFrame frameWithImageNamed:fileName];
-        _frameArray = [_frameArray arrayByAddingObject:frame];
-    }
-
-    self.frameSize = frame.originalSize;
+- (id)init{
+    if(self = [super init])
+        self.frameDir = @"GameOfLordAssets/UI/Weathers/";
+    return self;
 }
 
--(void) update:(CCTime)delta{
-    self.timer++;
-    if(self.timer == (numOfFrams * gap))
-        self.timer = 0;
-    
-    CCSpriteFrame *curFrame = [_frameArray objectAtIndex:(self.timer / gap)];
-    [self setSpriteFrame:curFrame];
-    return;
+-(void) loadWeatherFrame:(NSString*) name{
+    [self resetActionFrames:self.frameDir withActionName:name withFrameNum: NUM_WEATHER_FRAMES];
+}
+
+-(void) addWeather:(NSString*) name{
+    [self addAction: name withFrameNum: NUM_WEATHER_FRAMES];
+}
+
+-(void) changeWeather:(NSString*) name{
+    [self setAction: name];
 }
 
 @end

@@ -10,8 +10,22 @@
 
 @interface Animation : CCSprite
 
-@property (nonatomic, strong) NSMutableDictionary *actionMap;
+@property (nonatomic, strong) NSString *frameDir;
 @property (nonatomic, strong) NSString *action;
+@property (nonatomic, assign) int timer;
+@property (nonatomic, assign) CGSize frameSize;
+@property (nonatomic, strong) NSMutableDictionary *actionMap;
 
--(void) addActionFrames:(NSString*) action;
+-(void) addAction:(NSString*) action withFrameNum:(NSInteger) num;
+
+-(void) changeAction:(NSString*) action withFrameNum:(NSInteger) num;
+
+-(void) resetActionFrames:(NSString*) dir withActionName:(NSString*) action
+        withFrameNum:(NSInteger) num;
+
+-(id) init;
+-(id) initWithFrameDir:(NSString*) dir;
+
+-(void) loadWithAction:(NSString*) action withFrameNum:(NSInteger) num;
+
 @end

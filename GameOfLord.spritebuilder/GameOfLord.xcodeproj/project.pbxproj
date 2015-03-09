@@ -15,6 +15,8 @@
 		6381B0F41AA322CB0065D8D5 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B0F31AA322CB0065D8D5 /* Constants.m */; };
 		6381B1091AA487B30065D8D5 /* Level.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B1081AA487B30065D8D5 /* Level.m */; };
 		6381B11E1AA57F090065D8D5 /* Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B11D1AA57F090065D8D5 /* Animation.m */; };
+		6381B1211AA5A0AE0065D8D5 /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B1201AA5A0AE0065D8D5 /* Character.m */; };
+		63ED64991AAA72C900785115 /* MapHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 63ED64981AAA72C900785115 /* MapHelper.m */; };
 		7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
 		7A40360419DDEE84007B6E8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A40360319DDEE84007B6E8F /* main.m */; };
 		7A4036E819DE3F33007B6E8F /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
@@ -170,6 +172,10 @@
 		6381B1081AA487B30065D8D5 /* Level.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Level.m; path = Source/Level.m; sourceTree = "<group>"; };
 		6381B11C1AA57F090065D8D5 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animation.h; path = Source/Animation.h; sourceTree = "<group>"; };
 		6381B11D1AA57F090065D8D5 /* Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Animation.m; path = Source/Animation.m; sourceTree = "<group>"; };
+		6381B11F1AA5A0AE0065D8D5 /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Character.h; path = Source/Character.h; sourceTree = "<group>"; };
+		6381B1201AA5A0AE0065D8D5 /* Character.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Character.m; path = Source/Character.m; sourceTree = "<group>"; };
+		63ED64971AAA72C900785115 /* MapHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapHelper.h; path = Source/MapHelper.h; sourceTree = "<group>"; };
+		63ED64981AAA72C900785115 /* MapHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapHelper.m; path = Source/MapHelper.m; sourceTree = "<group>"; };
 		7A4035FF19DDEE84007B6E8F /* GameOfLord Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GameOfLord Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A40360219DDEE84007B6E8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/Mac/Info.plist; sourceTree = "<group>"; };
 		7A40360319DDEE84007B6E8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/Platforms/Mac/main.m; sourceTree = "<group>"; };
@@ -346,6 +352,15 @@
 			name = Weathers;
 			sourceTree = "<group>";
 		};
+		63ED64951AAA715E00785115 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				63ED64971AAA72C900785115 /* MapHelper.h */,
+				63ED64981AAA72C900785115 /* MapHelper.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		7A40362019DDEF0D007B6E8F /* Platforms */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,6 +480,7 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				63ED64951AAA715E00785115 /* Utilities */,
 				632D2A6C1AA1650B001BBBD9 /* UIElements */,
 				7A40362019DDEF0D007B6E8F /* Platforms */,
 				B7378992180767190076A88C /* MainScene.h */,
@@ -478,6 +494,8 @@
 				6381B1081AA487B30065D8D5 /* Level.m */,
 				6381B11C1AA57F090065D8D5 /* Animation.h */,
 				6381B11D1AA57F090065D8D5 /* Animation.m */,
+				6381B11F1AA5A0AE0065D8D5 /* Character.h */,
+				6381B1201AA5A0AE0065D8D5 /* Character.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -848,6 +866,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B73789871807631A0076A88C /* main.m in Sources */,
+				6381B1211AA5A0AE0065D8D5 /* Character.m in Sources */,
 				632D2A841AA2F136001BBBD9 /* GamePlay.m in Sources */,
 				6381B11E1AA57F090065D8D5 /* Animation.m in Sources */,
 				6381B1091AA487B30065D8D5 /* Level.m in Sources */,
@@ -856,6 +875,7 @@
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
 				6381B0F41AA322CB0065D8D5 /* Constants.m in Sources */,
 				632D2A711AA1654E001BBBD9 /* Weather.m in Sources */,
+				63ED64991AAA72C900785115 /* MapHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
