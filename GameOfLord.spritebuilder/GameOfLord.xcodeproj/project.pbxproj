@@ -17,6 +17,7 @@
 		6381B1091AA487B30065D8D5 /* Level.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B1081AA487B30065D8D5 /* Level.m */; };
 		6381B11E1AA57F090065D8D5 /* Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B11D1AA57F090065D8D5 /* Animation.m */; };
 		6381B1211AA5A0AE0065D8D5 /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = 6381B1201AA5A0AE0065D8D5 /* Character.m */; };
+		63E52CC81AB70D17002E5E8B /* Option.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E52CC71AB70D17002E5E8B /* Option.m */; };
 		63ED64991AAA72C900785115 /* MapHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 63ED64981AAA72C900785115 /* MapHelper.m */; };
 		7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
 		7A40360419DDEE84007B6E8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A40360319DDEE84007B6E8F /* main.m */; };
@@ -177,6 +178,8 @@
 		6381B11D1AA57F090065D8D5 /* Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Animation.m; path = Source/Animation.m; sourceTree = "<group>"; };
 		6381B11F1AA5A0AE0065D8D5 /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Character.h; path = Source/Character.h; sourceTree = "<group>"; };
 		6381B1201AA5A0AE0065D8D5 /* Character.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Character.m; path = Source/Character.m; sourceTree = "<group>"; };
+		63E52CC61AB70D17002E5E8B /* Option.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Option.h; path = Source/Option.h; sourceTree = "<group>"; };
+		63E52CC71AB70D17002E5E8B /* Option.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Option.m; path = Source/Option.m; sourceTree = "<group>"; };
 		63ED64971AAA72C900785115 /* MapHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapHelper.h; path = Source/MapHelper.h; sourceTree = "<group>"; };
 		63ED64981AAA72C900785115 /* MapHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapHelper.m; path = Source/MapHelper.m; sourceTree = "<group>"; };
 		7A4035FF19DDEE84007B6E8F /* GameOfLord Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GameOfLord Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -339,20 +342,14 @@
 		632D2A6C1AA1650B001BBBD9 /* UIElements */ = {
 			isa = PBXGroup;
 			children = (
-				632D2A6E1AA16516001BBBD9 /* Weathers */,
-				632D2A781AA2EAE5001BBBD9 /* UI.h */,
-				632D2A791AA2EAE5001BBBD9 /* UI.m */,
-			);
-			name = UIElements;
-			sourceTree = "<group>";
-		};
-		632D2A6E1AA16516001BBBD9 /* Weathers */ = {
-			isa = PBXGroup;
-			children = (
 				632D2A6F1AA1654E001BBBD9 /* Weather.h */,
 				632D2A701AA1654E001BBBD9 /* Weather.m */,
+				632D2A781AA2EAE5001BBBD9 /* UI.h */,
+				632D2A791AA2EAE5001BBBD9 /* UI.m */,
+				63E52CC61AB70D17002E5E8B /* Option.h */,
+				63E52CC71AB70D17002E5E8B /* Option.m */,
 			);
-			name = Weathers;
+			name = UIElements;
 			sourceTree = "<group>";
 		};
 		63ED64951AAA715E00785115 /* Utilities */ = {
@@ -870,6 +867,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63E52CC81AB70D17002E5E8B /* Option.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				632DFEC11AAD6ACE003BC368 /* NodeController.m in Sources */,
 				6381B1211AA5A0AE0065D8D5 /* Character.m in Sources */,

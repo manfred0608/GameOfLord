@@ -8,7 +8,7 @@
 
 #import "Animation.h"
 
-static const int gap = 12;
+static const int gap = 20;
 @implementation Animation{
     NSMutableArray *_frameArray;
 }
@@ -82,7 +82,11 @@ static const int gap = 12;
     if(_timer == (numOfFrams * gap))
         _timer = 0;
     
-    CCSpriteFrame *curFrame = [_frameArray objectAtIndex:(self.timer / gap)];
+    int index = 0;
+    if(!_pauseAnimation)
+        index = self.timer / gap;
+        
+    CCSpriteFrame *curFrame = [_frameArray objectAtIndex:index];
     [self setSpriteFrame:curFrame];
     return;
 }

@@ -7,9 +7,7 @@
 //
 
 #import "CCSprite.h"
-#import "MapHelper.h"
 #import "Constants.h"
-#import "NodeController.h"
 
 @interface Animation : CCSprite
 
@@ -18,6 +16,7 @@
 @property (nonatomic, assign) int timer;
 @property (nonatomic, assign) CGSize frameSize;
 @property (nonatomic, strong) NSMutableDictionary *actionMap;
+@property (nonatomic, assign) BOOL pauseAnimation;
 
 -(void) addAction:(NSString*) action withFrameNum:(NSInteger) num;
 

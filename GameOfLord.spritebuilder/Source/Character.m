@@ -7,6 +7,8 @@
 //
 
 #import "Character.h"
+#import "MapHelper.h"
+#import "NodeController.h"
 
 const NSString* baseDir = @"GameOfLordAssets/Characters/";
 static const float speed = 300.0f;
@@ -32,6 +34,8 @@ static const float speed = 300.0f;
         _attackRange = attackRange;
         _moveRange = moveRange;
         _dest = _indexes;
+        _prev = _indexes;
+        _behaved = NO;
         
         self.frameDir = [NSString stringWithFormat:@"%@%@/%@", baseDir, type, name];
         self.scale = 1.5;
@@ -46,7 +50,8 @@ static const float speed = 300.0f;
     if(_faceTo == FACE_RIGHT){
         defaultAction = [NSString stringWithFormat:@"%@%@_", MOVE, FACE_LEFT];
         self.flipX = YES;
-    }
+    }else
+        defaultAction = [NSString stringWithFormat:@"%@%@_", MOVE, _faceTo];
     
     [self changeAction:defaultAction withFrameNum: NUM_MOVE_FRAMES];
     self.effect = nil;
@@ -67,7 +72,8 @@ static const float speed = 300.0f;
         _brightnessEffect = [[CCEffectBrightness alloc] initWithBrightness:-0.2f];
     self.effect = _brightnessEffect;
     
-    [NodeController process:SELECTED_DONE withNodeName:@"Level"];
+    _behaved = YES;
+    _prev = _indexes;
 }
 
 -(void) moveLeft{
@@ -117,7 +123,7 @@ static const float speed = 300.0f;
             CGPoint midPos = ccp(self.indexes.x, _dest.y);
             [self placeAt:midPos withDest:_dest withScale:[MapHelper cellSize]];
             if(_indexes.x == _dest.x){
-                [self acted];
+                [self arrive];
                 return;
             }
         }
@@ -128,8 +134,7 @@ static const float speed = 300.0f;
         self.position = ccpAdd(self.position, ccp(0, delta * direction * speed));
         
         if((self.position.y - _dest.x * [MapHelper cellSize]) * direction >= 0){
-            [self placeAt:_dest withDest:_dest withScale:[MapHelper cellSize]];
-            [self acted];
+            [self arrive];
         }
     }
     [super update:delta];
@@ -141,26 +146,36 @@ static const float speed = 300.0f;
     self.position = ccp(indexes.y * scale, indexes.x * scale);
 }
 
--(void) attackLeft{}
+-(void) undo{
+    self.pauseAnimation = NO;
+    [self placeAt:_prev withDest:_prev withScale:[MapHelper cellSize]];
+}
 
--(void) attackRight{}
+-(void) arrive{
+    [self placeAt:_dest withDest:_dest withScale:[MapHelper cellSize]];
+    [NodeController arrived];
+    self.pauseAnimation = YES;
+}
 
--(void) attackUp{}
+-(void) attackTo:(CGPoint)indexes{
+    
+}
 
--(void) attackDown{}
+
+-(void) defTo:(CGPoint)indexes{
+    
+}
+
+-(void) hittedTo:(CGPoint)indexes{
+    
+}
+
+-(void) actionFaceTo:(CGPoint)indexes withType:(NSString*)type{
+    
+}
 
 -(void) levelUp{}
 
--(void) hitted{}
-
 -(void) dying{}
-
--(void) defLeft{}
-
--(void) defRight{}
-
--(void) defUp{}
-
--(void) defDown{}
 
 @end

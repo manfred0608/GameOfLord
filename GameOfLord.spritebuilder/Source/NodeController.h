@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Constants.h"
 
 @interface NodeController : NSObject
 
 +(void)process:(int) code withNodeName:(NSString*) name;
++(void)arrived;
+
 +(NSDictionary*)getAllNodes;
 +(void)setNodes:(NSDictionary*)allNodes;
++(void)characterAction:(int) code;
 @end

@@ -8,8 +8,6 @@
 
 #import "CCNode.h"
 #import "Character.h"
-#import "Constants.h"
-#import "MapHelper.h"
 
 @interface Level : CCNode
 
@@ -25,6 +23,6 @@
 -(NSArray*) attackTiles;
 
 -(void) selectedMoveTo:(CGPoint)indexes;
--(BOOL) showAction:(CGPoint) newTouch;
+-(BOOL) showAction:(CGPoint) newTouch withType:(BOOL)attackFlag;
 
 @end

@@ -9,17 +9,12 @@
 #import "CCNode.h"
 #import "Level.h"
 
-#import "UI.h"
-#import "Constants.h"
-
-#import "Weather.h"
-#import "Character.h"
-#import "MapHelper.h"
-#import "NodeController.h"
-
 @interface GamePlay : CCNode
 
 @property (nonatomic, strong) Level *levelNode;
 @property (nonatomic, strong) CCNode *selector;
 
+-(BOOL) attackFlag;
+
+-(void) setAttackFlag:(BOOL)flag;
 @end

@@ -23,4 +23,7 @@
 + (int)cellSize;
 + (BOOL)containsMoves:(NSArray*) array withValue:(CGPoint) pos;
 
++(void) cleanUpSelect:(NSString*)name withNode:(CCNode*) levelNode;
++(void) placeTiles:(NSArray*)locations withName:(NSString*)name withCCBName:(NSString*)ccb withNode:(CCNode*) levelNode;
++(void)placeOptionNode:(CCNode*)optionNode withCharacter:(CCNode*)character withLevel:(CCNode*)levelNode withWorld:(CCNode*)contentNode;
 @end

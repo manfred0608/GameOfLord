@@ -7,20 +7,33 @@
 //
 
 #import "GamePlay.h"
+#import "Option.h"
+#import "Constants.h"
+#import "MapHelper.h"
+#import "NodeController.h"
+#import "Weather.h"
+#import "Character.h"
+#import "UI.h"
+
+static BOOL attackFlag = NO;
 
 @implementation GamePlay{
     CCAction *_fingerMove;
     
-    CCNode *_contentNode;    
+    CCNode *_contentNode;
     UI *_uiNode;
     
     CGPoint touchStartPos;
+    
+    Option *_optionNode;
 }
 
 // is called when CCB file has completed loading
-- (void)didLoadFromCCB {
+- (void) didLoadFromCCB {
     // tell this scene to accept touches
     self.userInteractionEnabled = YES;
+    
+    [[NodeController getAllNodes] setValue:_contentNode forKey:@"Content"];
     
     [_uiNode loadUI: CLOUDY];
     [[NodeController getAllNodes] setValue:_uiNode forKey:@"UI"];
@@ -28,83 +41,78 @@
     [self loadLevel: @"1-1"];
     [[NodeController getAllNodes] setValue:_levelNode forKey:@"Level"];
     
+    _optionNode = (Option*)[CCBReader load:@"Options"];
+    [_contentNode addChild:_optionNode];
+    _optionNode.visible = NO;
+    [[NodeController getAllNodes] setValue:_optionNode forKey:@"Options"];
+    
     [[NodeController getAllNodes] setValue:self forKey:@"GamePlay"];
     [self resetTouchStartPos];
-    
 }
 
-- (void)loadLevel:(NSString*) name{
+- (void) loadLevel:(NSString*) name{
     NSString* levelName = [NSString stringWithFormat: @"Levels/Level%@", name];
     _levelNode = (Level *) [CCBReader load: levelName];
     _levelNode.name = name;
+    
     [_contentNode addChild:_levelNode];
     [self centerLevelNode];
 }
 
-- (void)centerLevelNode{
+- (void) centerLevelNode{
     float centerX = CGRectGetMidX(_contentNode.boundingBox);
     float centerY = CGRectGetMidY(_contentNode.boundingBox);
     _levelNode.position = ccp(centerX , centerY) ;
 }
 
 -(void) touchBegan:(CCTouch *)touch withEvent:(UIEvent *)event{
-    [self setDragStartPos: [touch locationInNode:_contentNode]];
+    CGPoint touchLocation = [touch locationInNode:self];
+    if(!CGRectContainsPoint([_contentNode boundingBox], touchLocation))
+        return;
     
+    if(_optionNode.visible == YES &&
+       !CGRectContainsPoint([_optionNode boundingBox], touchLocation))
+        return;
+    
+    [self setDragStartPos: [touch locationInNode:_contentNode]];    
+    [self placeSelector: [touch locationInNode:_levelNode]];
+}
+
+-(void) placeSelector:(CGPoint) touchLocation{
     if(!_selector){
         _selector = [CCBReader load:@"Selectors/Select"];
         _selector.scale = [MapHelper cellSize] / _selector.contentSizeInPoints.width;
         [_levelNode addChild: _selector];
     }
     
-    [self placeSelector: [touch locationInNode:_levelNode]];
-}
-
--(void) placeSelector:(CGPoint) touchLocation{
     int col = touchLocation.x / [MapHelper cellSize];
     int row = touchLocation.y / [MapHelper cellSize];
     
     CGPoint newPos = ccp(col * [MapHelper cellSize], row * [MapHelper cellSize]);
     
     if(CGPointEqualToPoint(_selector.position, newPos)){
-        if (_levelNode.selectedCharacter) {
-            
+        if (attackFlag == YES)
+            return;
+        if(_levelNode.selectedCharacter){
+            [MapHelper placeOptionNode:_optionNode withCharacter:_levelNode.selectedCharacter withLevel:_levelNode withWorld:_contentNode];
         }else
             return;
     }
-    
-    [self cleanUpSelect];
     _selector.position = newPos;
     
-    if ([_levelNode showAction:ccp(row, col)]) {
-        [self placeTiles:[_levelNode moveToTiles] withName:@"moveTile"
-             withCCBName:@"Selectors/Move"];
-        [self placeTiles:[_levelNode attackTiles] withName:@"attackTile"
-             withCCBName:@"Selectors/Red"];
+    [MapHelper cleanUpSelect:@"attackTile" withNode:_levelNode];
+    if(attackFlag){
+        [_levelNode showAction:ccp(row, col) withType:YES];
+        return;
     }
-}
-
--(void) cleanUpSelect{
-    NSArray *children = [_levelNode children];
-    for(int i = 0; i < [children count]; i++){
-        CCNode *node = (CCNode*)[children objectAtIndex:i];
-        if ([node.name hasPrefix:@"moveTile"] || [node.name hasPrefix:@"attackTile"]){
-            [node removeFromParentAndCleanup:YES];
-            i--;
-        }
-    }
-}
-
--(void) placeTiles:(NSArray*)locations withName:(NSString*)name withCCBName:(NSString*)ccb{
-    int count = 0;
     
-    for(int i = 0; i < [locations count]; i++){
-        CCNode *tile = [CCBReader load:ccb];
-        tile.scale = [MapHelper cellSize] / tile.contentSizeInPoints.width;
-        tile.name = [NSString stringWithFormat:@"%@%@", name, @(i)];
-        [_levelNode addChild:tile];
-        CGPoint pos = [[locations objectAtIndex:i] CGPointValue];
-        tile.position = [MapHelper placeAtIndexes: pos];
-        count++;
+    [MapHelper cleanUpSelect:@"moveTile" withNode:_levelNode];
+    
+    if ([_levelNode showAction:ccp(row, col) withType:NO] && _levelNode.selectedCharacter) {
+        [MapHelper placeTiles:[_levelNode moveToTiles] withName:@"moveTile"
+             withCCBName:@"Selectors/Move" withNode:_levelNode];
+        [MapHelper placeTiles:[_levelNode attackTiles] withName:@"attackTile"
+             withCCBName:@"Selectors/Red" withNode:_levelNode];
     }
 }
 
@@ -125,7 +133,6 @@
 
 -(void) update:(CCTime)delta{
     _levelNode.position = [self posInBound:[_levelNode position]];
-    
 }
 
 -(void) setDragStartPos:(CGPoint)touchLocation{
@@ -149,15 +156,15 @@
         [self resetTouchStartPos];
 }
 
-- (void)resetTouchStartPos{
+-(void) resetTouchStartPos{
     touchStartPos = ccp(NAN, NAN);
 }
 
-- (BOOL)hasTouchStarted{
+-(BOOL) hasTouchStarted{
     return !isnan(touchStartPos.x) && !isnan(touchStartPos.y);
 }
 
-- (CGPoint)posInBound:(CGPoint) pos{
+-(CGPoint) posInBound:(CGPoint) pos{
     if(CGRectContainsRect(_levelNode.boundingBox, _contentNode.boundingBox))
         return pos;
     
@@ -183,6 +190,14 @@
         y = yMin;
     
     return ccp(x, y);
+}
+
+-(BOOL) attackFlag{
+    return attackFlag;
+}
+
+-(void) setAttackFlag:(BOOL)flag{
+    attackFlag = flag;
 }
 
 @end

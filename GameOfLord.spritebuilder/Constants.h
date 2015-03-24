@@ -57,5 +57,9 @@ extern int const CLOSE_USER_INTERACTION;
 extern int const OPEN_USER_INTERACTION;
 
 extern int const SELECTED_DONE;
-
+extern int const ARRIVED_DEST;
+extern int const SELECTED_CANCEL;
+extern int const SELECTED_ATTACK;
+extern int const SELECTED_MAGIC;
+extern int const SELECTED_PACKAGE;
 #endif

@@ -12,6 +12,7 @@
 
 @property (nonatomic, assign) CGPoint indexes;
 @property (nonatomic, assign) CGPoint dest;
+@property (nonatomic, assign) CGPoint prev;
 
 @property (nonatomic, assign) NSString* type;
 @property (nonatomic, assign) int blood;
@@ -27,11 +28,14 @@
 
 @property (nonatomic, assign) NSRange attackRange;
 @property (nonatomic, assign) NSRange moveRange;
+@property (nonatomic, assign) BOOL behaved;
 
 -(id) initWithType:(NSString*) type withBlood:(int) blood withLevel:(int) level
     withExperience:(int) experience withAttack:(int) attack withDef:(int) def
     withMiss:(int) miss withName:(NSString*) name withFaceTo:(NSString*) faceTo
     withAttackRange:(NSRange) attackRange withMoveRange:(NSRange) moveRange;
+
+-(void) undo;
 
 -(void) acted;
 -(void) actDefault;
@@ -43,19 +47,13 @@
 -(void) moveUp;
 -(void) moveDown;
 
--(void) attackLeft;
--(void) attackRight;
--(void) attackUp;
--(void) attackDown;
+-(void) attackTo:(CGPoint)indexes;
 
 -(void) levelUp;
--(void) hitted;
+-(void) hittedTo:(CGPoint)indexes;
 
 -(void) dying;
 
--(void) defLeft;
--(void) defRight;
--(void) defUp;
--(void) defDown;
+-(void) defTo:(CGPoint)indexes;
 
 @end

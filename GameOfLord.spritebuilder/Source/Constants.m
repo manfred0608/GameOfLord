@@ -58,3 +58,9 @@ int const CLOSE_USER_INTERACTION = 5;
 int const OPEN_USER_INTERACTION = 6;
 
 int const SELECTED_DONE = 7;
+int const ARRIVED_DEST = 8;
+
+int const SELECTED_CANCEL = 9;
+int const SELECTED_ATTACK = 10;
+int const SELECTED_MAGIC = 11;
+int const SELECTED_PACKAGE = 12;
