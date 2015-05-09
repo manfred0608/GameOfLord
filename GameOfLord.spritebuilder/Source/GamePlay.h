@@ -16,5 +16,5 @@
 
 -(BOOL) attackFlag;
 
--(void) setAttackFlag:(BOOL)flag;
++(void) setAttackFlag:(BOOL)flag;
 @end

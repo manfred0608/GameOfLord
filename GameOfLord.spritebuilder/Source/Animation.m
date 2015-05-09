@@ -8,7 +8,7 @@
 
 #import "Animation.h"
 
-static const int gap = 20;
+static const int gap = 10;
 @implementation Animation{
     NSMutableArray *_frameArray;
 }
@@ -17,6 +17,8 @@ static const int gap = 20;
     if(self = [super init]){
         _timer = 0;
         _actionMap = [NSMutableDictionary dictionary];
+        _pauseAnimation = NO;
+        _repeat = YES;
     }
     return self;
 }
@@ -70,6 +72,16 @@ static const int gap = 20;
         [self addAction:action withFrameNum:num];
 }
 
+-(void) act:(NSString *)action withFrameNum:(NSInteger)num{
+    if (![_actionMap objectForKey:action])
+        [self addAction:action withFrameNum:num];
+    
+    _initialAction = _action;
+    _action = action;
+    _repeat = NO;
+    CCLOG(@"act");
+}
+
 -(void) update:(CCTime)delta{
     _timer++;
     
@@ -79,8 +91,15 @@ static const int gap = 20;
     if(numOfFrams < 1)
         return;
     
-    if(_timer == (numOfFrams * gap))
+    if(_timer == (numOfFrams * gap)){
         _timer = 0;
+        if(!_repeat){
+            _repeat = YES;
+            _action = _initialAction;
+            _initialAction = nil;
+            return;
+        }
+    }
     
     int index = 0;
     if(!_pauseAnimation)

@@ -17,6 +17,10 @@
 @property (nonatomic, assign) CGSize frameSize;
 @property (nonatomic, strong) NSMutableDictionary *actionMap;
 @property (nonatomic, assign) BOOL pauseAnimation;
+@property (nonatomic, assign) BOOL repeat;
+@property (nonatomic, strong) NSString *initialAction;
+
+-(void) act:(NSString*)action withFrameNum:(NSInteger) num;
 
 -(void) addAction:(NSString*) action withFrameNum:(NSInteger) num;
 

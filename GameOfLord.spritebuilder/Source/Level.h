@@ -23,6 +23,8 @@
 -(NSArray*) attackTiles;
 
 -(void) selectedMoveTo:(CGPoint)indexes;
+-(void) selectAttackTo:(CGPoint)indexes;
 -(BOOL) showAction:(CGPoint) newTouch withType:(BOOL)attackFlag;
+
 
 @end

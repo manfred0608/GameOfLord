@@ -36,21 +36,25 @@ static NSMutableDictionary *nodes;
 
 +(void)characterAction:(int) code{
     Level *level = (Level*) [nodes objectForKey:@"Level"];
+    
     if(code == SELECTED_CANCEL){
         [level.selectedCharacter undo];
         level.selectedCharacter = nil;
+        [GamePlay setAttackFlag:NO];
+        //[game];
     }
     if(code == SELECTED_DONE){
         [level.selectedCharacter acted];
     }
     
     if(code == SELECTED_ATTACK){
+        [MapHelper cleanUpSelect:@"moveTile" withNode:level];
         [MapHelper placeTiles:[level attackTiles] withName:@"attackTile" withCCBName:@"Selectors/Red" withNode:level];
-        GamePlay *game = (GamePlay*) [nodes objectForKey:@"GamePlay"];
-        [game setAttackFlag:YES];
+        [GamePlay setAttackFlag:YES];
     }
     
     if(code == SELECTED_MAGIC){
+        
     }
     
     if (code == SELECTED_PACKAGE) {

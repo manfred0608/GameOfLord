@@ -14,7 +14,8 @@
 
 -(void) test{
     [self addNewCharacter: @"112-1" withFaceTo: FACE_RIGHT atPos:ccp(5, 12)];
-    [self addNewCharacter: @"1-1" withFaceTo: FACE_LEFT atPos:ccp(5, 13)];
+    Character *enemy = [self addNewCharacter: @"1-1" withFaceTo: FACE_LEFT atPos:ccp(5, 13)];
+    enemy.type = ENEMY;
 }
 
 - (void)didLoadFromCCB {    
@@ -39,14 +40,15 @@
 
 -(BOOL) showAction:(CGPoint) newTouch withType:(BOOL)attackFlag{
     NSArray *possibles = nil;
-    if (attackFlag) {
-        if(_selectedCharacter && [self canAct:newTouch withPlaces:[self attackTiles]]){
+    if (attackFlag){
+        if ([self canAttack:newTouch]){
             [self selectAttackTo:newTouch];
             return NO;
         }
+        else return YES;
     }else{
         possibles = [self moveToTiles];
-        if (_selectedCharacter && [self canAct:newTouch withPlaces:[self moveToTiles]]){
+        if ([self canMove:newTouch]){
             [self selectedMoveTo:newTouch];
             return NO;
         }
@@ -75,12 +77,6 @@
 -(void) selectAttackTo:(CGPoint)indexes{
     Character* enemy = [self occupied:indexes];
     
-    if(self.selectedCharacter.type != ENEMY && enemy.type != ENEMY)
-        return;
-
-    if(enemy.type == ENEMY && self.selectedCharacter.type == ENEMY)
-        return;
-    
     [_selectedCharacter attackTo:enemy.indexes];
     if ([self attackCanBeDodged:self.selectedCharacter withTarget:enemy])
         [enemy defTo:self.selectedCharacter.indexes];
@@ -108,7 +104,7 @@
 }
 
 -(BOOL) attackCanBeDodged:(Character*)attacker withTarget:(Character*)target{
-    return YES;
+    return NO;
 }
 
 -(NSArray*) moveToTiles{
@@ -139,7 +135,7 @@
 }
 
 
--(void) addNewCharacter:(NSString*) cname withFaceTo:(NSString*) faceTo atPos:(CGPoint) indexes{
+-(Character*) addNewCharacter:(NSString*) cname withFaceTo:(NSString*) faceTo atPos:(CGPoint) indexes{
     Character* person = [[Character alloc] initWithType:SELF withBlood:100 withLevel:1 withExperience:0 withAttack:25 withDef:15 withMiss:20 withName:cname withFaceTo:faceTo
         withAttackRange:NSMakeRange(1, 0) withMoveRange:NSMakeRange(1, 4)];
     
@@ -151,6 +147,7 @@
     [self updateGameBoard:indexes withValue:person];
     
     [person placeAt:indexes withDest:indexes withScale:[MapHelper cellSize]];
+    return person;
 }
 
 -(void) updateGameBoard:(CGPoint)pos withValue:(NSObject*)character{
@@ -173,11 +170,30 @@
         return nil;
 }
 
--(BOOL)canAct:(CGPoint)indexes withPlaces:(NSArray*) possibles{
+-(BOOL)canMove:(CGPoint)indexes{
+    NSArray *possibles = [self moveToTiles];
+    
     if ([MapHelper containsMoves:possibles withValue:indexes] && ![self occupied:indexes])
         return YES;
     else
         return NO;
+}
+
+-(BOOL)canAttack:(CGPoint)indexes{
+    NSArray *possibles = [self attackTiles];
+    
+    if (!([MapHelper containsMoves:possibles withValue:indexes] && [self occupied:indexes]))
+        return NO;
+
+    Character *enemy = [self occupied:indexes];
+    
+    if(self.selectedCharacter.type != ENEMY && enemy.type != ENEMY)
+        return NO;
+    
+    if(enemy.type == ENEMY && self.selectedCharacter.type == ENEMY)
+        return NO;
+    
+    return YES;
 }
 
 @end

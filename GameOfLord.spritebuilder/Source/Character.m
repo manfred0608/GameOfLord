@@ -158,20 +158,46 @@ static const float speed = 300.0f;
 }
 
 -(void) attackTo:(CGPoint)indexes{
-    
+    [self actionFaceTo:indexes withName:ATTACK withNum:NUM_ATTACK_FRAMES];
 }
 
-
 -(void) defTo:(CGPoint)indexes{
-    
+    [self actionFaceTo:indexes withName:DEF withNum:NUM_DEF_FRAMES];
 }
 
 -(void) hittedTo:(CGPoint)indexes{
-    
+    if([MapHelper isLeft:self.indexes compareWith:indexes]){
+        self.faceTo = FACE_RIGHT;
+    }else if([MapHelper isRight:self.indexes compareWith:indexes]){
+        self.faceTo = FACE_LEFT;
+    }else{
+        if([MapHelper isUp:self.indexes compareWith:indexes]){
+            self.faceTo = FACE_DOWN;
+        }else{
+            self.faceTo = FACE_UP;
+        }
+    }
+    [self act:HIT withNum:NUM_HIT_FRAMES];
 }
 
--(void) actionFaceTo:(CGPoint)indexes withType:(NSString*)type{
+-(void) act:(NSString*)name withNum:(int)num{
+    [self changeAction:name withFrameNum:num];
+    self.repeat = NO;
+}
+
+-(void) actionFaceTo:(CGPoint)indexes withName:(NSString*)name withNum:(int)num{
+    _faceTo = [MapHelper relativePos:_indexes compareWith:indexes];
     
+    NSString *actionName = [NSString stringWithFormat:@"%@%@_", name, _faceTo];
+    
+    if(_faceTo == FACE_RIGHT){
+        actionName = [NSString stringWithFormat:@"%@%@_", name, FACE_LEFT];
+        self.flipX = YES;
+    }else
+        self.flipX = NO;
+    
+    [self changeAction:actionName withFrameNum:num];
+    self.repeat = NO;
 }
 
 -(void) levelUp{}

@@ -28,7 +28,7 @@ int const NUM_DEF_FRAMES = 1;
 NSString* const HIT = @"/spec/hit_";
 int const NUM_HIT_FRAMES = 1;
 
-NSString* const LEVEL_UP = @"/spec/level_up_";
+NSString* const LEVEL_UP = @"/spec/levelup_";
 int const NUM_LEVEL_UP_FRAMES = 1;
 
 NSString* const SUNNY = @"Sunny/";

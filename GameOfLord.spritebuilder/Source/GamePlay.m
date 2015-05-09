@@ -95,18 +95,22 @@ static BOOL attackFlag = NO;
             return;
         if(_levelNode.selectedCharacter){
             [MapHelper placeOptionNode:_optionNode withCharacter:_levelNode.selectedCharacter withLevel:_levelNode withWorld:_contentNode];
-        }else
-            return;
+            [MapHelper cleanUpSelect:@"attackTile" withNode:_levelNode];
+            [MapHelper cleanUpSelect:@"moveTile" withNode:_levelNode];
+        }
+        return;
     }
     _selector.position = newPos;
     
-    [MapHelper cleanUpSelect:@"attackTile" withNode:_levelNode];
-    if(attackFlag){
-        [_levelNode showAction:ccp(row, col) withType:YES];
-        return;
-    }
-    
     [MapHelper cleanUpSelect:@"moveTile" withNode:_levelNode];
+    
+    if(attackFlag){
+        if([_levelNode showAction:ccp(row, col) withType: attackFlag])
+            return;
+        else
+            attackFlag = false;
+    }
+    [MapHelper cleanUpSelect:@"attackTile" withNode:_levelNode];
     
     if ([_levelNode showAction:ccp(row, col) withType:NO] && _levelNode.selectedCharacter) {
         [MapHelper placeTiles:[_levelNode moveToTiles] withName:@"moveTile"
@@ -196,7 +200,7 @@ static BOOL attackFlag = NO;
     return attackFlag;
 }
 
--(void) setAttackFlag:(BOOL)flag{
++(void) setAttackFlag:(BOOL)flag{
     attackFlag = flag;
 }
 
